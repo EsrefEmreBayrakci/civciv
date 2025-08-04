@@ -15,6 +15,8 @@ public class playerContrroller : MonoBehaviour
 
     [Header("Zıplama Ayarları")]
     [SerializeField] float jumpForce = 5f;
+    [SerializeField] float airMultiplier;
+    [SerializeField] float jumpDrag;
     [SerializeField] bool zipladiMi;
     [SerializeField] float ziplamaCooldown = 1f;
 
@@ -32,6 +34,8 @@ public class playerContrroller : MonoBehaviour
     [SerializeField] float slideDrag;
 
     bool kayiyorMu;
+    private stateController stateController;
+    Vector3 movementDirection;
 
 
 
@@ -39,12 +43,14 @@ public class playerContrroller : MonoBehaviour
 
     void Awake()
     {
+        stateController = GetComponent<stateController>();
         rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         setInput();
+        setState();
         playerDrag();
         playerHizLimit();
 
@@ -79,33 +85,56 @@ public class playerContrroller : MonoBehaviour
         }
     }
 
+    void setState()
+    {
+        var movementDirection = getDirection();
+        var yerdeMi = isGrounded();
+        var currentState = stateController.getState();
+
+        var newState = currentState switch
+        {
+            _ when movementDirection == Vector3.zero && yerdeMi && !kayiyorMu => playerState.idle,
+            _ when movementDirection != Vector3.zero && yerdeMi && !kayiyorMu => playerState.move,
+            _ when movementDirection != Vector3.zero && yerdeMi && kayiyorMu => playerState.slide,
+            _ when movementDirection == Vector3.zero && yerdeMi && kayiyorMu => playerState.slideIdle,
+            _ when !zipladiMi && !yerdeMi => playerState.jump,
+            _ => currentState
+
+
+        };
+
+        if (currentState != newState)
+        {
+            stateController.changeState(newState);
+        }
+
+    }
+
     void playerMovement()
     {
-        Vector3 inputDirection = orientationTransform.forward * verticalInput + orientationTransform.right * horizontalInput;
+        movementDirection = orientationTransform.forward * verticalInput + orientationTransform.right * horizontalInput;
 
-        if (kayiyorMu)
+        float forceMultiplier = stateController.getState() switch
         {
-            rb.AddForce(inputDirection.normalized * moveSpeed * slideSpeed, ForceMode.Force);
+            playerState.move => 1f,
+            playerState.slide => slideSpeed,
+            playerState.jump => airMultiplier,
+            _ => 1f
+        };
 
-        }
-
-        else
-        {
-            rb.AddForce(inputDirection.normalized * moveSpeed, ForceMode.Force);
-        }
+        rb.AddForce(movementDirection.normalized * moveSpeed * forceMultiplier, ForceMode.Force);
 
     }
 
     void playerDrag()
     {
-        if (kayiyorMu)
+        rb.linearDamping = stateController.getState() switch
         {
-            rb.linearDamping = slideDrag;
-        }
-        else
-        {
-            rb.linearDamping = groundDrag;
-        }
+            playerState.move => groundDrag,
+            playerState.slide => slideDrag,
+            playerState.jump => jumpDrag,
+            _ => rb.linearDamping
+        };
 
 
     }
@@ -138,5 +167,10 @@ public class playerContrroller : MonoBehaviour
     {
         return Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
 
+    }
+
+    private Vector3 getDirection()
+    {
+        return movementDirection.normalized;
     }
 }
