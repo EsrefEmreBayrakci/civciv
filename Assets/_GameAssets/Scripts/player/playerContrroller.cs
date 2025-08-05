@@ -1,7 +1,11 @@
+using System;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class playerContrroller : MonoBehaviour
 {
+    public event Action OnJump;
+
     [Header("Referans")]
     [SerializeField] Transform orientationTransform;
 
@@ -37,6 +41,9 @@ public class playerContrroller : MonoBehaviour
     private stateController stateController;
     Vector3 movementDirection;
 
+    float _moveSpeed;
+    float _jumpForce;
+
 
 
 
@@ -45,6 +52,9 @@ public class playerContrroller : MonoBehaviour
     {
         stateController = GetComponent<stateController>();
         rb = GetComponent<Rigidbody>();
+
+        _moveSpeed = moveSpeed;
+        _jumpForce = jumpForce;
     }
 
     void Update()
@@ -152,12 +162,14 @@ public class playerContrroller : MonoBehaviour
 
     void playerJump()
     {
+        OnJump?.Invoke();
         // Y eksenindeki hızı sıfırla
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
     }
 
+    #region  Helpers
     void ziplamaReset()
     {
         zipladiMi = true;
@@ -173,4 +185,28 @@ public class playerContrroller : MonoBehaviour
     {
         return movementDirection.normalized;
     }
+
+    public void setMovementSpeed(float speed, float duration)
+    {
+        moveSpeed += speed;
+        Invoke("resetMoveSpeed", duration);
+    }
+
+    void resetMoveSpeed()
+    {
+        moveSpeed = _moveSpeed;
+    }
+
+    public void setJumpForce(float force, float duration)
+    {
+        jumpForce += force;
+        Invoke("resetJumpForce", duration);
+    }
+
+    void resetJumpForce()
+    {
+        jumpForce = _jumpForce;
+    }
+
+    #endregion
 }
