@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class playerInteractionController : MonoBehaviour
 {
+    private playerContrroller playerContrroller;
+
+    void Awake()
+    {
+        playerContrroller = GetComponent<playerContrroller>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -12,6 +18,15 @@ public class playerInteractionController : MonoBehaviour
         }
 
 
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent<IBoostable>(out var boostable))
+        {
+            boostable.Boost(playerContrroller);
+
+        }
     }
 
 

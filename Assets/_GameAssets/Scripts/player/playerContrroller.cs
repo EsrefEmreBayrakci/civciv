@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerContrroller : MonoBehaviour
 {
     public event Action OnJump;
+    public event Action<playerState> OnPlayerStateChanged;
 
     [Header("Referans")]
     [SerializeField] Transform orientationTransform;
@@ -116,6 +117,7 @@ public class playerContrroller : MonoBehaviour
         if (currentState != newState)
         {
             stateController.changeState(newState);
+            OnPlayerStateChanged?.Invoke(newState);
         }
 
     }
@@ -207,6 +209,12 @@ public class playerContrroller : MonoBehaviour
     {
         jumpForce = _jumpForce;
     }
+
+    public Rigidbody getPlayerRB()
+    {
+        return rb;
+    }
+
 
     #endregion
 }
