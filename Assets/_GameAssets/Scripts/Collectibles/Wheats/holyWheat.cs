@@ -20,6 +20,7 @@ public class holyWheat : MonoBehaviour, ICollectible
 
     public void collect()
     {
+
         playerContrroller.setJumpForce(wheatDesignOS.increasDecreaseMultiplier, wheatDesignOS.resetDuration);
         PlayerStateUI.playBoosterUIAnimation(boosterTransform, boosterImage, PlayerStateUI.getHolyWheatImage(), wheatDesignOS.activeSprite, wheatDesignOS.passiveSprite, wheatDesignOS.activeWheatSprite, wheatDesignOS.passiveWheatSprite, wheatDesignOS.resetDuration);
         Destroy(gameObject);

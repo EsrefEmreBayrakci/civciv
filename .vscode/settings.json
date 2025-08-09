@@ -5,6 +5,7 @@
         "**/.vs": true,
         "**/.gitmodules": true,
         "**/.vsconfig": true,
+        "blackbox.codeSuggestions": true,
         "gitHub.copilot.inlineSuggest.enable": true,
         "editor.inlineSuggest.enabled": true,
         "editor.suggest.showWords": true,

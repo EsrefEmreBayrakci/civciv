@@ -13,4 +13,6 @@ public class WheatDesignOS : ScriptableObject
     public Sprite passiveWheatSprite;
     public Sprite activeWheatSprite;
 
+
+
 }

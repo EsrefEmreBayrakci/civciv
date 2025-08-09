@@ -12,17 +12,24 @@ public class goldWheat : MonoBehaviour, ICollectible
     private RectTransform boosterTransform;
     private Image boosterImage;
 
+
+
     void Awake()
     {
         boosterTransform = PlayerStateUI.getBoosterSpeedTransform();
         boosterImage = boosterTransform.GetComponent<Image>();
+
     }
 
 
     public void collect()
     {
+
+
         playerContrroller.setMovementSpeed(wheatDesignOS.increasDecreaseMultiplier, wheatDesignOS.resetDuration);
         PlayerStateUI.playBoosterUIAnimation(boosterTransform, boosterImage, PlayerStateUI.getGoldWheatImage(), wheatDesignOS.activeSprite, wheatDesignOS.passiveSprite, wheatDesignOS.activeWheatSprite, wheatDesignOS.passiveWheatSprite, wheatDesignOS.resetDuration);
+
+
 
         Destroy(gameObject);
     }
