@@ -32,6 +32,10 @@ public class animationController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.currentGameState != gameState.play && GameManager.Instance.currentGameState != gameState.resume)
+        {
+            return;
+        }
         setPlayerAnimastions();
     }
 

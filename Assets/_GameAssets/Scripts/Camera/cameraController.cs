@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class cameraController : MonoBehaviour
@@ -11,8 +12,14 @@ public class cameraController : MonoBehaviour
     [SerializeField] float rotationSpeed;
 
 
+
     void Update()
     {
+        if (GameManager.Instance.currentGameState != gameState.play && GameManager.Instance.currentGameState != gameState.resume)
+        {
+            return;
+        }
+
         //Kamera'nın bakış yönünün ayarlanması
         Vector3 viewDirection = playerTransform.position - new Vector3(transform.position.x, playerTransform.position.y, transform.position.z);
 

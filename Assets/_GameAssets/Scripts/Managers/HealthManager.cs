@@ -1,8 +1,10 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class HealtManager : MonoBehaviour
+public class HealthManager : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 3;
     private int currentHealth;
@@ -12,6 +14,27 @@ public class HealtManager : MonoBehaviour
     [SerializeField] Sprite passiveHealthSprite;
 
 
+    public static HealthManager Instance { get; private set; }
+
+
+    void Awake()
+    {
+        Instance = this;
+
+        SceneManager.sceneLoaded += (scene, mode) =>
+   {
+       healthIcons = new GameObject[3];
+
+       healthIcons[2] = GameObject.FindGameObjectWithTag("RightIcon");
+       healthIcons[1] = GameObject.FindGameObjectWithTag("MiddleIcon");
+       healthIcons[0] = GameObject.FindGameObjectWithTag("LeftIcon");
+
+
+
+       currentHealth = maxHealth;
+       UpdateHealthIcons();
+   };
+    }
 
 
 
@@ -20,6 +43,7 @@ public class HealtManager : MonoBehaviour
         currentHealth = maxHealth;
         UpdateHealthIcons();
     }
+
 
 
 
@@ -36,7 +60,8 @@ public class HealtManager : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            // işlemler burada yapılabilir
+            GameManager.Instance.changeGameState(gameState.gameOver);
+            WinLoseUI.Instance.LoseUI();
 
         }
     }

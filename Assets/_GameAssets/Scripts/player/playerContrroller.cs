@@ -60,6 +60,11 @@ public class playerContrroller : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.currentGameState != gameState.play && GameManager.Instance.currentGameState != gameState.resume)
+        {
+            return;
+        }
+
         setInput();
         setState();
         playerDrag();
@@ -69,6 +74,11 @@ public class playerContrroller : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.currentGameState != gameState.play && GameManager.Instance.currentGameState != gameState.resume)
+        {
+            return;
+        }
+
         playerMovement();
     }
 
@@ -215,6 +225,10 @@ public class playerContrroller : MonoBehaviour
         return rb;
     }
 
+    public Transform getPlayerTransform()
+    {
+        return orientationTransform;
+    }
 
     #endregion
 }

@@ -22,6 +22,13 @@ public class rottenWheat : MonoBehaviour, ICollectible
     {
         playerContrroller.setMovementSpeed(wheatDesignOS.increasDecreaseMultiplier, wheatDesignOS.resetDuration);
         PlayerStateUI.playBoosterUIAnimation(boosterTransform, boosterImage, PlayerStateUI.getRottenWheatImage(), wheatDesignOS.activeSprite, wheatDesignOS.passiveSprite, wheatDesignOS.activeWheatSprite, wheatDesignOS.passiveWheatSprite, wheatDesignOS.resetDuration);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+
+        Invoke(nameof(ActiveWheat), wheatDesignOS.resetWheatDuration);
+    }
+
+    private void ActiveWheat()
+    {
+        gameObject.SetActive(true);
     }
 }

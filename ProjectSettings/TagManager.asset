@@ -7,6 +7,10 @@ TagManager:
   - GoldWheat
   - HolyWheat
   - RottenWheat
+  - HealthIcon
+  - RightIcon
+  - MiddleIcon
+  - LeftIcon
   layers:
   - Default
   - TransparentFX

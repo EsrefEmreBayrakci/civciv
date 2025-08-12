@@ -20,6 +20,11 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.currentGameState != gameState.play && GameManager.Instance.currentGameState != gameState.resume)
+        {
+            return;
+        }
+
         timer();
 
     }
@@ -37,6 +42,11 @@ public class Timer : MonoBehaviour
             rotateble.transform.Rotate(0, 0, -rotateAngle * Time.deltaTime);
 
         }
+    }
+
+    public float getTime()
+    {
+        return time;
     }
 
 

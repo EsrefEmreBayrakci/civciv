@@ -31,6 +31,13 @@ public class goldWheat : MonoBehaviour, ICollectible
 
 
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+
+        Invoke(nameof(ActiveWheat), wheatDesignOS.resetWheatDuration);
+    }
+
+    private void ActiveWheat()
+    {
+        gameObject.SetActive(true);
     }
 }
