@@ -13,7 +13,8 @@ public class WinLoseUI : MonoBehaviour
     [SerializeField] private GameObject blackBackground;
     [SerializeField] private GameObject timer;
 
-
+    [SerializeField] private Button MainMenuButton;
+    [SerializeField] private Button MainMenuButton2;
 
     private float time;
 
@@ -23,6 +24,16 @@ public class WinLoseUI : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        MainMenuButton.onClick.AddListener(() =>
+        {
+            SceneTransition.Instance.LoadScene("MenuScene");
+        });
+
+        MainMenuButton2.onClick.AddListener(() =>
+        {
+            SceneTransition.Instance.LoadScene("MenuScene");
+        });
     }
 
     void Update()

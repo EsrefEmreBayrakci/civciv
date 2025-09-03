@@ -9,6 +9,7 @@ public class playerContrroller : MonoBehaviour
 
     [Header("Referans")]
     [SerializeField] Transform orientationTransform;
+    public CatController cat;
 
     [Header("Hareket Ayarları")]
     [SerializeField] float moveSpeed = 20f;
@@ -22,7 +23,7 @@ public class playerContrroller : MonoBehaviour
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float airMultiplier;
     [SerializeField] float jumpDrag;
-    [SerializeField] bool zipladiMi;
+    [SerializeField] public bool zipladiMi;
     [SerializeField] float ziplamaCooldown = 1f;
 
 
@@ -45,7 +46,7 @@ public class playerContrroller : MonoBehaviour
     float _moveSpeed;
     float _jumpForce;
 
-
+    public bool IsOnFloor { get; private set; } = false;
 
 
 
@@ -179,6 +180,23 @@ public class playerContrroller : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Floor"))
+        {
+            IsOnFloor = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Floor"))
+        {
+            IsOnFloor = false;
+        }
     }
 
     #region  Helpers

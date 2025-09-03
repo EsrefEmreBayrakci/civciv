@@ -84,6 +84,8 @@ public class HealthManager : MonoBehaviour
     {
         for (int i = 0; i < healthIcons.Length; i++)
         {
+            if (healthIcons[i] == null) continue;
+
             if (i < currentHealth)
             {
                 Image img = healthIcons[i].GetComponent<Image>();
@@ -116,5 +118,7 @@ public class HealthManager : MonoBehaviour
     {
         currentHealth = 0;
         UpdateHealthIcons();
+        GameManager.Instance.changeGameState(gameState.gameOver);
+        WinLoseUI.Instance.LoseUI();
     }
 }
