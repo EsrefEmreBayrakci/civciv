@@ -1,6 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 
@@ -23,19 +23,49 @@ public class SettingsUI : MonoBehaviour
     private Image blackBackgroundImage;
     private bool isESC = false;
 
+
+    [Header("Sound Sprites")]
+    [SerializeField] private Sprite soundActiveSprite;
+    [SerializeField] private Sprite soundInactiveSprite;
+
+    private bool isSoundMuted = false;
+    private Image soundButtonImage;
+
+
+    [Header("Sound Sprites")]
+    [SerializeField] private Sprite musicActiveSprite;
+    [SerializeField] private Sprite musicInactiveSprite;
+
+    private bool ismusicMuted = false;
+    private Image musicButtonImage;
+
+
+    [SerializeField] private PlayableDirector director;
+
+
+
     void Awake()
     {
         blackBackgroundImage = blackBackground.GetComponent<Image>();
         settingsPopup.transform.localScale = Vector3.zero;
 
+        soundButtonImage = soundButton.GetComponent<Image>();
+        musicButtonImage = musicButton.GetComponent<Image>();
+
         pauseButton.onClick.AddListener(OnPauseButtonClicked);
         resumeButton.onClick.AddListener(OnResumeButtonClicked);
 
+        musicButton.onClick.AddListener(OnMusicButtonClicked);
+        soundButton.onClick.AddListener(OnSoundButtonClicked);
+
         mainMenuButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.Play(SoundType.ButtonClickSound);
             SceneTransition.Instance.LoadScene("MenuScene");
         });
     }
+
+
 
     private void Start()
     {
@@ -61,6 +91,8 @@ public class SettingsUI : MonoBehaviour
     private void OnPauseButtonClicked()
     {
         GameManager.Instance.changeGameState(gameState.pause);
+        AudioManager.Instance.Play(SoundType.ButtonClickSound);
+        director.Pause();
 
         if (catController != null)
         {
@@ -78,13 +110,25 @@ public class SettingsUI : MonoBehaviour
 
     private void OnResumeButtonClicked()
     {
+        AudioManager.Instance.Play(SoundType.ButtonClickSound);
 
-
+        if (director != null && director.state == PlayState.Paused)
+            director.Resume();
 
         blackBackgroundImage.DOFade(0f, 0.5f).SetEase(Ease.Linear);
         settingsPopup.transform.DOScale(0f, 0.5f).SetEase(Ease.OutExpo).OnComplete(() =>
         {
-            GameManager.Instance.changeGameState(gameState.resume);
+
+            if (previousState == catState.Idle && director != null && director.state == PlayState.Playing)
+            {
+
+                GameManager.Instance.changeGameState(gameState.cutScene);
+            }
+            else
+            {
+
+                GameManager.Instance.changeGameState(gameState.resume);
+            }
 
             if (catController != null)
             {
@@ -96,5 +140,31 @@ public class SettingsUI : MonoBehaviour
             settingsPopup.SetActive(false);
             blackBackground.SetActive(false);
         });
+    }
+
+
+    private void OnSoundButtonClicked()
+    {
+        isSoundMuted = !isSoundMuted; // Toggle
+
+        AudioManager.Instance.SetSoundEffectsMute(isSoundMuted);
+
+        // Buton sprite değiştir
+        soundButtonImage.sprite = isSoundMuted ? soundInactiveSprite : soundActiveSprite;
+
+        AudioManager.Instance.Play(SoundType.ButtonClickSound);
+    }
+
+    private void OnMusicButtonClicked()
+    {
+        ismusicMuted = !ismusicMuted;
+
+        BackgroundMusic.Instance.PlayBackgroundMusic(!ismusicMuted);
+
+        // Buton sprite değiştir
+        musicButtonImage.sprite = ismusicMuted ? musicInactiveSprite : musicActiveSprite;
+
+        AudioManager.Instance.Play(SoundType.ButtonClickSound);
+
     }
 }

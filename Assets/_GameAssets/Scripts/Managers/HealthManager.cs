@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -40,6 +39,13 @@ public class HealthManager : MonoBehaviour
 
     private void Start()
     {
+        healthIcons = new GameObject[3];
+
+        healthIcons[2] = GameObject.FindGameObjectWithTag("RightIcon");
+        healthIcons[1] = GameObject.FindGameObjectWithTag("MiddleIcon");
+        healthIcons[0] = GameObject.FindGameObjectWithTag("LeftIcon");
+
+
         currentHealth = maxHealth;
         UpdateHealthIcons();
     }

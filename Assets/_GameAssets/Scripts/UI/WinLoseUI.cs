@@ -27,11 +27,13 @@ public class WinLoseUI : MonoBehaviour
 
         MainMenuButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.Play(SoundType.ButtonClickSound);
             SceneTransition.Instance.LoadScene("MenuScene");
         });
 
         MainMenuButton2.onClick.AddListener(() =>
         {
+            AudioManager.Instance.Play(SoundType.ButtonClickSound);
             SceneTransition.Instance.LoadScene("MenuScene");
         });
     }
@@ -46,11 +48,14 @@ public class WinLoseUI : MonoBehaviour
         winUI.SetActive(true);
         winUI.transform.DOScale(Vector3.one, 0.2f).OnComplete(() =>
         {
+            AudioManager.Instance.Play(SoundType.WinSound);
             blackBackground.SetActive(true);
             blackBackground.GetComponent<Image>().DOFade(0.8f, 0.3f).SetEase(Ease.Linear);
             int minutes = Mathf.FloorToInt(time / 60);
             int seconds = Mathf.FloorToInt(time % 60);
             winText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+
+            BackgroundMusic.Instance.PlayBackgroundMusic(false);
 
             //Time.timeScale = 0;
         });
@@ -62,11 +67,14 @@ public class WinLoseUI : MonoBehaviour
         loseUI.SetActive(true);
         loseUI.transform.DOScale(Vector3.one, 0.2f).OnComplete(() =>
         {
+            AudioManager.Instance.Play(SoundType.LoseSound);
             blackBackground.SetActive(true);
             blackBackground.GetComponent<Image>().DOFade(0.8f, 0.3f).SetEase(Ease.Linear);
             int minutes = Mathf.FloorToInt(time / 60);
             int seconds = Mathf.FloorToInt(time % 60);
             loseText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+
+            BackgroundMusic.Instance.PlayBackgroundMusic(false);
         });
 
     }
@@ -81,6 +89,7 @@ public class WinLoseUI : MonoBehaviour
         winUI.transform.localScale = Vector3.zero;
         loseUI.transform.localScale = Vector3.zero;
         SceneManager.LoadScene("GameScene");
+        AudioManager.Instance.Play(SoundType.TransitionSound);
     }
 
 }

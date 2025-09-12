@@ -12,6 +12,7 @@ TagManager:
   - MiddleIcon
   - LeftIcon
   - Floor
+  - Water
   layers:
   - Default
   - TransparentFX

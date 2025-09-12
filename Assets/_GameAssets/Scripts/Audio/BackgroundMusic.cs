@@ -8,14 +8,14 @@ public class BackgroundMusic : MonoBehaviour
 
     private AudioSource _audioSource;
 
-    private void Awake() 
+    private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
 
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
-        } 
+        }
         else
         {
             Instance = this;

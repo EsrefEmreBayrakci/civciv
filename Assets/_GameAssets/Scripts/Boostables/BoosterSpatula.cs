@@ -12,6 +12,8 @@ public class BoosterSpatula : MonoBehaviour, IBoostable
     {
         if (isActive) return;
 
+        AudioManager.Instance.Play(SoundType.SpatulaSound);
+
         PlayAnimation();
         Rigidbody rb = playerContrroller.getPlayerRB();
 
@@ -20,6 +22,7 @@ public class BoosterSpatula : MonoBehaviour, IBoostable
         rb.AddForce(transform.forward * jumpForce, ForceMode.Impulse);
         isActive = true;
         Invoke("ResetActive", 0.2f);
+
 
     }
 

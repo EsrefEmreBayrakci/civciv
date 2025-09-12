@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        changeGameState(gameState.play);
+        changeGameState(gameState.cutScene);
+        BackgroundMusic.Instance.PlayBackgroundMusic(true);
     }
 
 

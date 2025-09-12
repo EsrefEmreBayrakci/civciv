@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class CatController : MonoBehaviour
 {
@@ -190,9 +191,11 @@ public class CatController : MonoBehaviour
     {
         if (!canAttack) return;
         changeState(catState.Attacking);
-        // Player öldü → Game Over
-        HealthManager.Instance.FullDamage();
 
+        HealthManager.Instance.FullDamage();
+        AudioManager.Instance.Play(SoundType.CatSound);
+
+        CameraShakeController.Instance.Shake(new Vector3(-1f, -1f, 0f), 3f, 2f, CinemachineImpulseDefinition.ImpulseShapes.Rumble);
 
 
         // Son pozisyonu kaydet

@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class EggCollectible : MonoBehaviour, ICollectible
@@ -8,7 +9,13 @@ public class EggCollectible : MonoBehaviour, ICollectible
     {
         if (isCollected) return; // zaten toplandıysa tekrar işlemi engelle
 
+        AudioManager.Instance.Play(SoundType.PickupGoodSound);
+
         isCollected = true;
+
+        CameraShakeController.Instance.Shake(new Vector3(0f, -0f, -0.4f), 0.7f, 1f, CinemachineImpulseDefinition.ImpulseShapes.Bump);
+
+
         Destroy(gameObject);
         GameManager.Instance.CollectEgg();
     }

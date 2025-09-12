@@ -14,10 +14,15 @@ public class SceneTransition : MonoBehaviour
     private void Awake()
     {
         // Singleton
-        if (Instance == null) Instance = this;
-        else { Destroy(gameObject); return; }
-
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject); // Yeni geleni yok et
+        }
         fadeImage.color = new Color(0, 0, 0, 0); // Başlangıçta görünmez
     }
 

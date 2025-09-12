@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PlayerStateUI : MonoBehaviour
@@ -34,6 +36,8 @@ public class PlayerStateUI : MonoBehaviour
     [SerializeField] Sprite playerSlidingActiveSprite;
     [SerializeField] Sprite playerSlidingPassiveSprite;
 
+    [SerializeField] PlayableDirector director;
+
     [Header("Settings")]
     [SerializeField] float moveDuration;
     [SerializeField] Ease moveEase;
@@ -54,6 +58,12 @@ public class PlayerStateUI : MonoBehaviour
     void Start()
     {
         playerContrroller.OnPlayerStateChanged += PlayerContrroller_OnStateChanged;
+        director.stopped += OnPlayableDirectorStopped;
+
+    }
+
+    private void OnPlayableDirectorStopped(PlayableDirector director)
+    {
         SetStateUserInterface(playerWalkingActiveSprite, playerSlidingPassiveSprite, playerWalking, playerSliding);
     }
 

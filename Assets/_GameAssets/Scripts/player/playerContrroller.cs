@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class playerContrroller : MonoBehaviour
@@ -179,6 +178,7 @@ public class playerContrroller : MonoBehaviour
         // Y eksenindeki hızı sıfırla
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        AudioManager.Instance.Play(SoundType.JumpSound);
 
     }
 
