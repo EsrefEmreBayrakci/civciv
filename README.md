@@ -273,9 +273,4 @@ Assets/
 
 💡 Alternatif olarak: Derlenmiş sürümü indirdiyseniz, CikWick Game klasöründeki game.exe dosyasını çalıştırarak oyunu doğrudan oynayabilirsiniz. Unity kurmanıza gerek yoktur.
 
----
 
-<div align="center">
-  <p>Unity ile ❤️ ile yapılmıştır / Made with ❤️ using Unity</p>
-  <p>© 2024 CivCiv Game Project. Tüm hakları saklıdır / All rights reserved.</p>
-</div>
