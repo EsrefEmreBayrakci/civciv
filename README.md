@@ -141,6 +141,8 @@ Assets/
 2. Select your target platform
 3. Click `Build` or `Build and Run`
 
+💡 Alternatively: If you have downloaded the built version, you can run the game.exe file inside the CikWick Game folder to play the game directly. Unity installation is not required.
+
 ---
 
 ## Türkçe
@@ -268,6 +270,8 @@ Assets/
 1. `File > Build Settings`'e gidin
 2. Hedef platformunuzu seçin
 3. `Build` veya `Build and Run`'a tıklayın
+
+💡 Alternatif olarak: Derlenmiş sürümü indirdiyseniz, CikWick Game klasöründeki game.exe dosyasını çalıştırarak oyunu doğrudan oynayabilirsiniz. Unity kurmanıza gerek yoktur.
 
 ---
 
