@@ -8,6 +8,9 @@
 </div>
 
 ---
+<img width="1919" height="1077" alt="Ekran görüntüsü 2025-09-28 215339" src="https://github.com/user-attachments/assets/35a52d2a-f731-4f74-ba2b-4159a4d3956c" />
+<img width="1919" height="1079" alt="Ekran görüntüsü 2025-09-28 215352" src="https://github.com/user-attachments/assets/f492aab6-46d7-4512-97a7-61b462c3fc81" />
+<img width="1919" height="1079" alt="Ekran görüntüsü 2025-09-28 215426" src="https://github.com/user-attachments/assets/975f0544-67cb-48ba-b2c3-650b86d9d5b2" />
 
 ## 🌐 Language / Dil
 
