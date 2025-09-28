@@ -130,7 +130,7 @@ Assets/
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/EsrefEmreBayrakci/civciv]
+   git clone https://github.com/EsrefEmreBayrakci/civciv
    cd civciv
    ```
 
@@ -260,7 +260,7 @@ Assets/
 ### Kurulum
 1. Repository'yi klonlayın:
    ```bash
-   git clone [https://github.com/EsrefEmreBayrakci/civciv]
+   git clone https://github.com/EsrefEmreBayrakci/civciv
    cd civciv
    ```
 
