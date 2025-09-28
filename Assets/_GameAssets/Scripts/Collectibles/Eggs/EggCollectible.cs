@@ -5,9 +5,10 @@ public class EggCollectible : MonoBehaviour, ICollectible
 {
     private bool isCollected = false;
 
+    [System.Obsolete]
     public void collect()
     {
-        if (isCollected) return; // zaten toplandıysa tekrar işlemi engelle
+        if (isCollected) return;
 
         AudioManager.Instance.Play(SoundType.PickupGoodSound);
 

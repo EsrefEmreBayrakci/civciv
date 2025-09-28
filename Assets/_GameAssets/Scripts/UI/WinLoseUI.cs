@@ -62,6 +62,7 @@ public class WinLoseUI : MonoBehaviour
 
     }
 
+    [System.Obsolete]
     public void LoseUI()
     {
         loseUI.SetActive(true);
@@ -76,6 +77,7 @@ public class WinLoseUI : MonoBehaviour
 
             BackgroundMusic.Instance.PlayBackgroundMusic(false);
         });
+
 
     }
 

@@ -20,13 +20,14 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    [Obsolete]
     private void OnEnable()
     {
         changeGameState(gameState.cutScene);
         BackgroundMusic.Instance.PlayBackgroundMusic(true);
     }
 
-
+    [Obsolete]
     public void changeGameState(gameState gameState)
     {
 
@@ -47,13 +48,12 @@ public class GameManager : MonoBehaviour
 
                 break;
             case gameState.gameOver:
-                // Oyun bittiğinde yapılacaklar
+
                 break;
         }
     }
 
-
-
+    [Obsolete]
     public void CollectEgg()
     {
         currentEggCount++;
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
             eggCountText.transform.DOScale(1.2f, 0.2f).OnComplete(() =>
             {
                 eggCountText.transform.DOScale(1f, 0.2f);
-                GameManager.Instance.changeGameState(gameState.gameOver);
+                changeGameState(gameState.gameOver);
                 WinLoseUI.Instance.WinUI();
             });
 

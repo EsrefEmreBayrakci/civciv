@@ -20,6 +20,7 @@ public class TimelineManager : MonoBehaviour
         catStateController = catStateController.GetComponent<catStateController>();
     }
 
+    [Obsolete]
     void OnEnable()
     {
         director.Play();
@@ -29,6 +30,7 @@ public class TimelineManager : MonoBehaviour
 
     }
 
+    [Obsolete]
     private void OnPlayableDirectorStopped(PlayableDirector director)
     {
         if (GameManager.Instance.currentGameState != gameState.pause)

@@ -22,6 +22,7 @@ public class animationController : MonoBehaviour
     private void playerContrroller_OnJump()
     {
         animator.SetBool(Consts.PlayerAnimastions.IS_JUMPING, true);
+        animator.SetBool(Consts.PlayerAnimastions.IS_SWIMMING, false);
         Invoke("ResetJump", 0.5f);
     }
 
@@ -50,12 +51,13 @@ public class animationController : MonoBehaviour
             case playerState.idle:
                 animator.SetBool(Consts.PlayerAnimastions.IS_SLIDING, false);
                 animator.SetBool(Consts.PlayerAnimastions.IS_MOVING, false);
+                animator.SetBool(Consts.PlayerAnimastions.IS_SWIMMING, false);
                 break;
 
             case playerState.move:
                 animator.SetBool(Consts.PlayerAnimastions.IS_SLIDING, false);
                 animator.SetBool(Consts.PlayerAnimastions.IS_MOVING, true);
-                //animator.SetBool(Consts.PlayerAnimastions.IS_JUMPING, false);
+                animator.SetBool(Consts.PlayerAnimastions.IS_SWIMMING, false);
                 break;
 
             case playerState.slide:
@@ -67,6 +69,12 @@ public class animationController : MonoBehaviour
                 animator.SetBool(Consts.PlayerAnimastions.IS_SLIDING, true);
                 animator.SetBool(Consts.PlayerAnimastions.IS_SLIDING_ACTIVE, false);
                 break;
+            case playerState.swimIdle:
+                animator.SetBool(Consts.PlayerAnimastions.IS_MOVING, false);
+                animator.SetBool(Consts.PlayerAnimastions.IS_SLIDING, false);
+                animator.SetBool(Consts.PlayerAnimastions.IS_SWIMMING, true);
+                break;
+
         }
     }
 }

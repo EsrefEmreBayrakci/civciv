@@ -9,16 +9,16 @@ public class CatController : MonoBehaviour
     [Header("References")]
     public catStateController stateController;
     public Transform player;
-    public playerContrroller playerFloor;   // PlayerFloorCheck scripti buraya atanacak
+    public playerContrroller playerFloor;
     public NavMeshAgent agent;
     private Animator anim;
 
     [Header("Visual")]
-    public Transform catVisual;  // kedinin görsel objesi
+    public Transform catVisual;
     public float rotationSpeed = 8f;
 
     [Header("Attack Settings")]
-    public float attackRange = 1.5f;   // ne kadar yakında saldıracak
+    public float attackRange = 1.5f;
     public float attackCooldown = 2f;
     private bool canAttack = true;
 
@@ -34,7 +34,7 @@ public class CatController : MonoBehaviour
     private Vector3 homePos;
     private bool isIdling;
 
-    private Vector3 lastPosition; // saldırı sonrası sabitlenecek pozisyon
+    private Vector3 lastPosition;
     private bool freezePosition = false;
 
     public bool isPaused = false;
@@ -42,7 +42,7 @@ public class CatController : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false; // Rotasyonu biz kontrol edeceğiz
+        agent.updateRotation = false;
         anim = GetComponentInChildren<Animator>();
         if (!stateController) stateController = GetComponent<catStateController>();
 
@@ -64,16 +64,16 @@ public class CatController : MonoBehaviour
 
         if (isPaused)
         {
-            // Pause’da kedi tamamen duracak
+
             agent.isStopped = true;
-            return; // geri kalan state logic çalışmasın
+            return;
         }
 
         if (playerFloor != null)
         {
             if (playerFloor.IsOnFloor || playerFloor.zipladiMi == false)
             {
-                // Player yakınsa → Attack
+
                 float dist = Vector3.Distance(transform.position, player.position);
                 if (dist <= attackRange && canAttack)
                 {
@@ -87,7 +87,7 @@ public class CatController : MonoBehaviour
             }
             else
             {
-                // Sadece gerçekten havada değilse (ne yerde ne zıplıyor) → Walking
+
                 if (stateController.getCurrentState() == catState.Running || stateController.getCurrentState() == catState.Attacking)
                 {
                     changeState(catState.Walking);
@@ -96,7 +96,7 @@ public class CatController : MonoBehaviour
         }
         else if (stateController.getCurrentState() == catState.Running || stateController.getCurrentState() == catState.Attacking)
         {
-            // Player artık floor’da değil → tekrar wander döngüsüne dön
+
             changeState(catState.Walking);
         }
 
@@ -130,7 +130,6 @@ public class CatController : MonoBehaviour
     {
         if (catVisual == null) return;
 
-        // Kedi gerçekten hareket ediyor mu?
         Vector3 velocity = agent.velocity;
         velocity.y = 0f;
 
@@ -149,7 +148,7 @@ public class CatController : MonoBehaviour
     {
         if (!agent.hasPath || agent.remainingDistance < arriveThreshold)
         {
-            changeState(catState.Idle); // hedefe ulaştığında Idle
+            changeState(catState.Idle);
         }
     }
 
@@ -198,7 +197,6 @@ public class CatController : MonoBehaviour
         CameraShakeController.Instance.Shake(new Vector3(-1f, -1f, 0f), 3f, 2f, CinemachineImpulseDefinition.ImpulseShapes.Rumble);
 
 
-        // Son pozisyonu kaydet
         lastPosition = transform.position;
         freezePosition = true;
 

@@ -47,6 +47,12 @@ public class playerContrroller : MonoBehaviour
 
     public bool IsOnFloor { get; private set; } = false;
 
+    public bool isSwimming = false;
+
+    public void SetSwimming(bool value)
+    {
+        isSwimming = value;
+    }
 
 
     void Awake()
@@ -101,7 +107,7 @@ public class playerContrroller : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space) && zipladiMi && isGrounded())
         {
             zipladiMi = false;
-            playerJump();
+            playerJump(jumpForce);
             Invoke("ziplamaReset", ziplamaCooldown);
         }
     }
@@ -112,17 +118,25 @@ public class playerContrroller : MonoBehaviour
         var yerdeMi = isGrounded();
         var currentState = stateController.getState();
 
-        var newState = currentState switch
+        playerState newState;
+
+        if (isSwimming)
         {
-            _ when movementDirection == Vector3.zero && yerdeMi && !kayiyorMu => playerState.idle,
-            _ when movementDirection != Vector3.zero && yerdeMi && !kayiyorMu => playerState.move,
-            _ when movementDirection != Vector3.zero && yerdeMi && kayiyorMu => playerState.slide,
-            _ when movementDirection == Vector3.zero && yerdeMi && kayiyorMu => playerState.slideIdle,
-            _ when !zipladiMi && !yerdeMi => playerState.jump,
-            _ => currentState
 
-
-        };
+            newState = playerState.swimIdle;
+        }
+        else
+        {
+            newState = currentState switch
+            {
+                _ when movementDirection == Vector3.zero && yerdeMi && !kayiyorMu => playerState.idle,
+                _ when movementDirection != Vector3.zero && yerdeMi && !kayiyorMu => playerState.move,
+                _ when movementDirection != Vector3.zero && yerdeMi && kayiyorMu => playerState.slide,
+                _ when movementDirection == Vector3.zero && yerdeMi && kayiyorMu => playerState.slideIdle,
+                _ when !zipladiMi && !yerdeMi => playerState.jump,
+                _ => currentState
+            };
+        }
 
         if (currentState != newState)
         {
@@ -172,10 +186,10 @@ public class playerContrroller : MonoBehaviour
         }
     }
 
-    void playerJump()
+    public void playerJump(float jumpForce)
     {
         OnJump?.Invoke();
-        // Y eksenindeki hızı sıfırla
+
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         AudioManager.Instance.Play(SoundType.JumpSound);

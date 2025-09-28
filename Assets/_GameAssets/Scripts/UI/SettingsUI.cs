@@ -88,6 +88,7 @@ public class SettingsUI : MonoBehaviour
 
     }
 
+    [System.Obsolete]
     private void OnPauseButtonClicked()
     {
         GameManager.Instance.changeGameState(gameState.pause);
@@ -108,6 +109,7 @@ public class SettingsUI : MonoBehaviour
         settingsPopup.transform.DOScale(1.5f, 0.5f).SetEase(Ease.OutBack);
     }
 
+    [System.Obsolete]
     private void OnResumeButtonClicked()
     {
         AudioManager.Instance.Play(SoundType.ButtonClickSound);
@@ -149,7 +151,7 @@ public class SettingsUI : MonoBehaviour
 
         AudioManager.Instance.SetSoundEffectsMute(isSoundMuted);
 
-        // Buton sprite değiştir
+
         soundButtonImage.sprite = isSoundMuted ? soundInactiveSprite : soundActiveSprite;
 
         AudioManager.Instance.Play(SoundType.ButtonClickSound);
@@ -161,7 +163,7 @@ public class SettingsUI : MonoBehaviour
 
         BackgroundMusic.Instance.PlayBackgroundMusic(!ismusicMuted);
 
-        // Buton sprite değiştir
+
         musicButtonImage.sprite = ismusicMuted ? musicInactiveSprite : musicActiveSprite;
 
         AudioManager.Instance.Play(SoundType.ButtonClickSound);

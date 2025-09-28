@@ -9,5 +9,7 @@ public class Consts
         public const string IS_JUMPING = "IsJumping";
         public const string IS_SLIDING = "IsSliding";
         public const string IS_SLIDING_ACTIVE = "IsSlidingActive";
+        public const string IS_SWIMMING = "IsSwimming";
+        public const string IS_DIVING = "IsDiving";
     }
 }

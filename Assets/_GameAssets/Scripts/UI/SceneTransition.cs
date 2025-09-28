@@ -21,9 +21,9 @@ public class SceneTransition : MonoBehaviour
         }
         else if (Instance != this)
         {
-            Destroy(gameObject); // Yeni geleni yok et
+            Destroy(gameObject);
         }
-        fadeImage.color = new Color(0, 0, 0, 0); // Başlangıçta görünmez
+        fadeImage.color = new Color(0, 0, 0, 0);
     }
 
     public void LoadScene(string sceneName)

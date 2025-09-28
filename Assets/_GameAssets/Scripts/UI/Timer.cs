@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     {
 
         timerIsRunning = true;
-        rotateAngle = 6f * Time.timeScale; // 360 degrees / 60 seconds = 6 degrees per second
+        rotateAngle = 6f * Time.timeScale;
     }
 
     private void Update()

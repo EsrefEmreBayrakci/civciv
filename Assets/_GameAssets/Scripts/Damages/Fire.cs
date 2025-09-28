@@ -14,7 +14,7 @@ public class FireController : MonoBehaviour
 
     private HealthManager healthManager;
 
-    // 🔥 Cooldown ayarları
+
     [SerializeField] private float damageCooldown = 1f;
     private bool canDamage = true;
 
@@ -40,11 +40,11 @@ public class FireController : MonoBehaviour
         while (true)
         {
             gameObject.transform.localScale = Vector3.one;
-            fireObject.SetActive(true);  // Aç
+            fireObject.SetActive(true);
             yield return new WaitForSeconds(openTime);
 
             gameObject.transform.localScale = Vector3.zero;
-            fireObject.SetActive(false); // Kapat
+            fireObject.SetActive(false);
             yield return new WaitForSeconds(closeTime);
         }
     }

@@ -8,50 +8,73 @@ public class WaterController : MonoBehaviour
     public float floatSmooth = 2f;
 
     [Header("Visual Reference")]
-    public Transform playerVisual;   // karakterin model/mesh objesi
+    public Transform playerVisual;
 
     private Rigidbody rb;
     private Collider col;
 
-    private bool isInWater = false;
+    public bool isInWater = false;
     private float surfaceY = 0f;
     private float halfHeight = 1f;
 
     private float smoothVel = 0f;
 
+
+    private playerContrroller playerContrroller;
+    private stateController stateController;
+
+
+
+
     void Start()
     {
+        playerContrroller = GetComponent<playerContrroller>();
+        stateController = GetComponent<stateController>();
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         halfHeight = col.bounds.extents.y;
     }
 
+    [System.Obsolete]
     void Update()
     {
         if (!isInWater) return;
+        if (Input.GetKey(KeyCode.F) && isInWater)
+        {
+            playerContrroller.playerJump(20f);
+            stateController.changeState(playerState.jump);
+            isInWater = false;
+            FindObjectOfType<playerContrroller>().SetSwimming(false);
+
+        }
 
         float targetY = rb.position.y;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
+
+
             // Dalma
             targetY = rb.position.y - diveSpeed * Time.deltaTime;
+            BreathRadial.Instance.SetUnderwater(true, true);
 
-            // Visual'ı X ekseninde 180 dereceye doğru döndür
             if (playerVisual != null)
             {
                 Quaternion targetRot = Quaternion.Euler(130f, 0f, 0f);
                 playerVisual.localRotation = Quaternion.Slerp(
-                    playerVisual.localRotation, targetRot, Time.deltaTime * 3f
+                    playerVisual.localRotation, targetRot, Time.deltaTime * 1f
                 );
             }
         }
         else
         {
+
+
             // Yüzeye çıkma
             targetY = surfaceY - halfHeight;
 
-            // Visual'ı tekrar 0 dereceye döndür
+            BreathRadial.Instance.SetUnderwater(false, true);
+
             if (playerVisual != null)
             {
                 Quaternion targetRot = Quaternion.Euler(0f, 0f, 0f);
@@ -61,10 +84,11 @@ public class WaterController : MonoBehaviour
             }
         }
 
-        // Dikey hareket smoothing
+
+
         float newY = Mathf.SmoothDamp(rb.position.y, targetY, ref smoothVel, 1f / floatSmooth);
 
-        // Yatay hareket
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         Vector3 move = transform.TransformDirection(new Vector3(h, 0, v)) * swimSpeed;
@@ -73,22 +97,29 @@ public class WaterController : MonoBehaviour
         rb.position = new Vector3(rb.position.x, newY, rb.position.z);
     }
 
+    [System.Obsolete]
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Water"))
         {
+            BreathRadial.Instance.SetUnderwater(false, true);
             isInWater = true;
+            FindObjectOfType<playerContrroller>().SetSwimming(true);
             Transform surface = other.transform.Find("WaterSurface");
             if (surface != null)
                 surfaceY = surface.position.y;
         }
     }
 
+    [System.Obsolete]
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Water"))
         {
+            FindObjectOfType<playerContrroller>().SetSwimming(false);
             isInWater = false;
+
+            BreathRadial.Instance.SetUnderwater(false, false);
         }
     }
 }

@@ -50,15 +50,11 @@ public class HealthManager : MonoBehaviour
         UpdateHealthIcons();
     }
 
-
-
-
-
-
+    [System.Obsolete]
     public void Damage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        // Animasyon yapılabilir
+
 
         UpdateHealthIcons();
 
@@ -79,7 +75,7 @@ public class HealthManager : MonoBehaviour
 
         if (currentHealth != oldHealth)
         {
-            UpdateHealthIcons(); // Sadece değişiklik varsa animasyon uygula
+            UpdateHealthIcons();
         }
     }
 
@@ -120,6 +116,7 @@ public class HealthManager : MonoBehaviour
 
     }
 
+    [System.Obsolete]
     public void FullDamage()
     {
         currentHealth = 0;

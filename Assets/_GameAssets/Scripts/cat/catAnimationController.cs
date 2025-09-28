@@ -21,7 +21,6 @@ public class CatAnimationController : MonoBehaviour
         anim.SetBool("IsRunning", false);
         anim.SetBool("IsAttacking", false);
 
-        // aktif state’e göre aç
         switch (stateController.getCurrentState())
         {
             case catState.Idle:
